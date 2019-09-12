@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include "queue.h"
+
+int main()
+{
+
+    // Job* j1 = init_job(1, 2, 15);
+    // Job* j2 = init_job(2, 5, 10);
+    // Job* j3 = init_job(3, 10, 5);
+    // queue* q = init_queue(0);
+    // add_queue(q, j1);
+    // add_queue(q, j2);
+    // add_queue(q, j3);
+    // print_queue(q);
+    // del_queue(q);
+    // puts("");
+    // print_queue(q);
+    // del_queue(q);
+    // puts("");
+    // print_queue(q);
+    // del_queue(q);
+    // puts("");
+    // print_queue(q);
+
+    // del_queue(q);
+    // print_queue(q);
+
+    // puts("TESTING PRIORITY QUEUE\n\n");
+    // queue* q2 = init_queue(1);
+    // add_queue(q2, j1);
+    // add_queue(q2, j2);
+    // add_queue(q2, j3);
+    // Job* j4 = init_job(4, 3, 11);
+    // print_queue(q2);
+    
+
+    Job* j1 = init_job(1, 2, 3);
+    Job* j2 = init_job(2, 3, 4);
+    Job* j3 = init_job(3, 4, 8);
+    queue* q = init_queue(1);
+
+    add_queue(q, j1);
+    add_queue(q, j2);
+    add_queue(q, j3);
+    Job* j4 = init_job(4, 5, 7);
+    add_queue(q, j4);
+    print_queue(q);
+
+
+}

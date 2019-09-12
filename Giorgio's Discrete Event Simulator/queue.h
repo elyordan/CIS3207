@@ -10,8 +10,9 @@
 //             ******************************************
 
 
-//Event Queue - Jobs
-typedef struct Job {
+// strut for jobs creation
+typedef struct Job 
+{
 
   int jobId;
   int jobType;
@@ -21,26 +22,25 @@ typedef struct Job {
   
 } Job;
 
-/*//Linked List Data Structure
-typedef struct {
+Job* init_job(int, int, int);
+
+// queue as a linked list
+typedef struct 
+{
 
   Job *head;
   Job *tail;
   int size;
-
-  struct Job * next;
+  int priority;
   
-} queue;*/
+} queue;
 
-
-
-
-
-
-
-
-
-
+// prototypes for functions on the queue.c files
+queue* init_queue(int);
+void add_queue(queue*, Job*);
+Job* del_queue(queue*);
+void print_queue(queue*);
+void print_job(Job*);
 
 
 #endif

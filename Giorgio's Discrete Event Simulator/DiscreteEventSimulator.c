@@ -23,7 +23,11 @@ void readFile();
 int main() {
 
     readFile();
-    
+
+    srand(SEED);
+
+     //adding two events to priority queue, job 1 arrival and simulation finished.
+
 
 }
 
@@ -32,15 +36,15 @@ int main() {
 void readFile () {
 
     //file reader variables
-    const char *conf_types[12] = {"SEED", "INIT_TIME", "FIN_TIME", "ARRIVE_MIN", "ARRIVE_MAX", "CPU_MIN", "CPU_MAX","DISK1_MIN", "DISK1_MAX", "DISK2_MIN", "DISK2_MAX", "QUIT_PROB"};
-    int conf_values[12] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+    const char *configTypes[12] = {"SEED", "INIT_TIME", "FIN_TIME", "ARRIVE_MIN", "ARRIVE_MAX", "CPU_MIN", "CPU_MAX","DISK1_MIN", "DISK1_MAX", "DISK2_MIN", "DISK2_MAX", "QUIT_PROB"};
+    int configValues[12] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
     //File reading
-    FILE *configFile = NULL;
-    configFile = fopen("values.txt", "r");
+    FILE *fp = NULL;
+    fp = fopen("values.txt", "r");
     
     
-    if (configFile != NULL) {
+    if (fp != NULL) {
         
         int lineLength = 1024;
         char *token;
@@ -49,7 +53,7 @@ void readFile () {
         char line[lineLength];
         int i;
         
-        while (fgets(line, lineLength, configFile) != NULL) {
+        while (fgets(line, lineLength, fp) != NULL) {
 
             token = strtok(line, " ");
             
@@ -57,6 +61,7 @@ void readFile () {
 
                 strcpy(stringSearch, token);
             }
+
             else {
 
                 continue;
@@ -68,6 +73,7 @@ void readFile () {
 
                 valueSearch = atof(token);
             }
+
             else {
 
                 valueSearch = 0;
@@ -75,31 +81,31 @@ void readFile () {
             
             for (i = 0; i < 12; i++) {
 
-                if (strcmp(stringSearch, conf_types[i]) == 0) {
+                if (strcmp(stringSearch, configTypes[i]) == 0) {
 
-                    conf_values[i] = (int)valueSearch;
+                    configValues[i] = (int)valueSearch;
                 }
             }
         }
     }
     
-    for (int k = 0; k < 12; k++) {
+    for (int t = 0; t < 12; t++) {
         
-        printf("%s: %d\n", conf_types[k], conf_values[k]);
+        printf("%s: %d\n", configTypes[t], configValues[t]);
     }
     
-    SEED = conf_values[0];
-    INIT_TIME = conf_values[1];
-    FIN_TIME = conf_values[2];
-    ARRIVE_MIN = conf_values[3];
-    ARRIVE_MAX = conf_values[4];
-    QUIT_PROB = conf_values[5];
-    CPU_MIN = conf_values[6];
-    CPU_MAX = conf_values[7];
-    DISK1_MIN = conf_values[8];
-    DISK1_MAX = conf_values[9];
-    DISK2_MIN = conf_values[10];
-    DISK2_MAX = conf_values[11];
+    SEED = configValues[0];
+    INIT_TIME = configValues[1];
+    FIN_TIME = configValues[2];
+    ARRIVE_MIN = configValues[3];
+    ARRIVE_MAX = configValues[4];
+    CPU_MIN = configValues[5];
+    CPU_MAX = configValues[6];
+    DISK1_MIN = configValues[7];
+    DISK1_MAX = configValues[8];
+    DISK2_MIN = configValues[9];
+    DISK2_MAX = configValues[10];
+    QUIT_PROB = configValues[11];
 
 }
 
