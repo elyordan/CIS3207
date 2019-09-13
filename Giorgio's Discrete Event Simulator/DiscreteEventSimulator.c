@@ -22,13 +22,44 @@ void readFile();
 
 int main() {
 
+    //first read the file
     readFile();
 
+    //create the seed
     srand(SEED);
+    
+    //create 3 jobs by default includig one with the fin_time
+    Job* j0 = init_job(0, 0, FIN_TIME);
 
-     //adding two events to priority queue, job 1 arrival and simulation finished.
+    Job* j1 = init_job(1, 0, 1);
+    
+    Job* j2 = init_job(2, 0, 2);
+
+    //create the priorityQueue, cpuQueue, disk1Queue, disk2Queue
+    queue* cpuQueue = init_queue(0);
+    queue* disk1Queue = init_queue(0);
+    queue* disk2Queue = init_queue(0);
+    queue* priorityQueue = init_queue(1);
+
+    //add jobs to priority queue
+    add_queue(priorityQueue, j0); 
+    add_queue(priorityQueue, j1);
+    add_queue(priorityQueue, j2);
+
+    //start the for loop with fin_time and then the whole program goes inside the for loop
+    for (size_t i = 0; i < FIN_TIME; i++)
+    {
+        //create jobs
+        
+        
 
 
+
+
+
+
+    }
+    
 }
 
 
@@ -89,10 +120,10 @@ void readFile () {
         }
     }
     
-    for (int t = 0; t < 12; t++) {
+    /*for (int t = 0; t < 12; t++) {
         
         printf("%s: %d\n", configTypes[t], configValues[t]);
-    }
+    }*/
     
     SEED = configValues[0];
     INIT_TIME = configValues[1];
@@ -107,7 +138,11 @@ void readFile () {
     DISK2_MAX = configValues[10];
     QUIT_PROB = configValues[11];
 
+    //Convert the int 20 from the file to float 0.2
+    QUIT_PROB = QUIT_PROB/100;
+
 }
+
 
 
 

@@ -13,7 +13,6 @@ queue* init_queue(int pri)
 //function to add jobs to the queue
 void add_queue(queue* q, Job* j)
 {   
-    puts("ADD QUEUE CALL");
     if (q->size == 0) { //check if the size of the queue is 0
             q->head = j;
             q->tail = j;

@@ -33,17 +33,22 @@ int main()
     // Job* j4 = init_job(4, 3, 11);
     // print_queue(q2);
     
+    queue* cpuQueue = init_queue(0);
+    queue* disk1Queue = init_queue(0);
+    queue* disk2Queue = init_queue(0);
+    queue* priorityQueue = init_queue(1);
 
     Job* j1 = init_job(1, 2, 3);
     Job* j2 = init_job(2, 3, 4);
     Job* j3 = init_job(3, 4, 8);
+    Job* j4 = init_job(4, 5, 7);
     queue* q = init_queue(1);
 
+    
     add_queue(q, j1);
     add_queue(q, j2);
     add_queue(q, j3);
-    Job* j4 = init_job(4, 5, 7);
-    add_queue(q, j4);
+    add_queue(q, j4);    
     print_queue(q);
 
 

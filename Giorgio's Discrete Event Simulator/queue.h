@@ -31,6 +31,9 @@ typedef struct
   Job *head;
   Job *tail;
   int size;
+
+  // added int priority so that if is 0 is a regular queue 
+  //and if is 1 is going to be a priority queue
   int priority;
   
 } queue;
@@ -44,3 +47,4 @@ void print_job(Job*);
 
 
 #endif
+
