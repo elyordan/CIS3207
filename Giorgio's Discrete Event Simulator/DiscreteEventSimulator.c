@@ -29,11 +29,11 @@ int main() {
     srand(SEED);
     
     //create 3 jobs by default includig one with the fin_time
-    Job* j0 = init_job(0, 0, FIN_TIME);
+    Job* job0 = init_job(0, 0, FIN_TIME);
 
-    Job* j1 = init_job(1, 0, 1);
+    Job* job1 = init_job(1, 0, 1);
     
-    Job* j2 = init_job(2, 0, 2);
+    Job* job2 = init_job(2, 0, 2);
 
     //create the priorityQueue, cpuQueue, disk1Queue, disk2Queue
     queue* cpuQueue = init_queue(0);
@@ -42,23 +42,37 @@ int main() {
     queue* priorityQueue = init_queue(1);
 
     //add jobs to priority queue
-    add_queue(priorityQueue, j0); 
-    add_queue(priorityQueue, j1);
-    add_queue(priorityQueue, j2);
-
+    add_queue(priorityQueue, job0); 
+    add_queue(priorityQueue, job1);
+    add_queue(priorityQueue, job2);
+    
     //start the for loop with fin_time and then the whole program goes inside the for loop
-    for (size_t i = 0; i < FIN_TIME; i++)
+    
+    for (size_t i = 3; i < 12; i++)
     {
         //create jobs
+        Job* otherJobs = init_job(i, 0, (rand() % ((ARRIVE_MAX - ARRIVE_MIN ) + i)));
+
+        //push jobs into priority queue
+        add_queue(priorityQueue, otherJobs); 
         
+        //pull job from priority queue and push it to cpu queue
+        Job *removeJob =  del_queue(priorityQueue);
+
+        add_queue(cpuQueue, removeJob);
         
-
-
-
-
+        //check if the cpu is empty
 
 
     }
+
+    puts("This is the priority queue:\n");
+    print_queue(priorityQueue);
+    puts("\nThis is the cpu queue:");
+    print_queue(cpuQueue);
+
+
+
     
 }
 

@@ -4,7 +4,7 @@
 //function to initialize the queue
 queue* init_queue(int pri)
 {
-    queue* toRet = (queue*)malloc(sizeof(queue*));//typecast queue as pointer then allocote memory
+    queue* toRet = (queue*)malloc(sizeof(queue));//typecast queue as pointer then allocote memory
     toRet->head = NULL;
     toRet->tail = NULL;
     toRet->priority = pri;
@@ -13,6 +13,7 @@ queue* init_queue(int pri)
 //function to add jobs to the queue
 void add_queue(queue* q, Job* j)
 {   
+    //printf("%d\n", q->priority);
     if (q->size == 0) { //check if the size of the queue is 0
             q->head = j;
             q->tail = j;
@@ -26,8 +27,8 @@ void add_queue(queue* q, Job* j)
         Job* prev = NULL;
         Job* curr = q->head;
         int i;
-
         for (i = 0; i < q->size; i++) {
+            //printf("%d %d %d\n", i, curr->jobId, curr->jobTime);
 
             // sort the priority queue by comparing the first element to every other element
             // and inserting then in the right position based on time
@@ -93,5 +94,6 @@ Job* init_job(int id, int type, int time)
     toRet->jobId = id;
     toRet->jobType = type;
     toRet->jobTime = time;
+    toRet->next = NULL;
     return toRet;
 }

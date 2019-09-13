@@ -32,6 +32,16 @@ int main()
     // add_queue(q2, j3);
     // Job* j4 = init_job(4, 3, 11);
     // print_queue(q2);
+
+    /*for (size_t i = 0; i < 2; i++)
+    
+    {
+
+      Job *removeJob =  del_queue(priorityQueue);
+      print_queue(priorityQueue);
+      add_queue(cpuQueue, removeJob);
+    
+    }*/
     
     queue* cpuQueue = init_queue(0);
     queue* disk1Queue = init_queue(0);
