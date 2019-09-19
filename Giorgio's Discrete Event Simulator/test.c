@@ -48,10 +48,10 @@ int main()
     queue* disk2Queue = init_queue(0);
     queue* priorityQueue = init_queue(1);
 
-    Job* j1 = init_job(1, 2, 3);
-    Job* j2 = init_job(2, 3, 4);
-    Job* j3 = init_job(3, 4, 8);
-    Job* j4 = init_job(4, 5, 7);
+    Job* j1 = init_job(1, 3);
+    Job* j2 = init_job(2, 4);
+    Job* j3 = init_job(3, 8);
+    Job* j4 = init_job(4, 7);
     queue* q = init_queue(1);
 
     
