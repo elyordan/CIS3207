@@ -12,8 +12,7 @@
 #define DISK2_ARRIVAL 6
 #define DISK2_FINISH 7
 #define SIMULATION_END 8
-#define IDLE  0
-#define BUSY  1
+
 
 //Global Variables
 float SEED = 0;
@@ -60,6 +59,8 @@ int main() {
     
     //read the file
     readFile();
+
+    //set current time to init_time
     CURRENTTIME = INIT_TIME;
 
     //create the priorityQueue, cpuQueue, disk1Queue, disk2Queue
@@ -225,8 +226,7 @@ void readFile ()
 //Function for CPU processing
 void processCpu(queue *pq, queue *cpuq, Job *e)
 {
-    // it processes the job it sees and adds it to the CPU queue, then after this if statement, 
-    // it should actually process the next job in the CPU queue
+    // it processes the job it sees and adds it to the CPU queue
     if (e->jobType == CPU_ARRIVAL)
     {
         Job* next_job = init_job(jobCount, CPU_ARRIVAL, e->jobTime + randomNumber(ARRIVE_MIN, ARRIVE_MAX));
@@ -236,19 +236,14 @@ void processCpu(queue *pq, queue *cpuq, Job *e)
         jobCount++;
         add_queue(pq, next_job);
         add_queue(cpuq, e);
-
-        // //keep track of max cpu size
-        // if (cpu.current > maxSizeCpu)
-        // {
-        //     maxSizeCpu = cpu.current;
-        // }
         
     }
     else
     {
-        //cpu.status = IDLE;
+
         fprintf(f, "At Time %d Job Number %d Finishes at CPU\n",CURRENTTIME, e->jobId);
-        //competedJobCpu++;
+
+        //check if the job will quit
         if(!quitProb(QUIT_PROB))
         {
             Job* disk_job = init_job(e->jobId, whatDisk(), e->jobTime + randomNumber(CPU_MIN, CPU_MAX));
@@ -269,15 +264,6 @@ void processCpu(queue *pq, queue *cpuq, Job *e)
         add_queue(pq, finish_job); 
         //printf("Finish Job Number %d\n", finish_job->jobId);       
         
-        // this is for just the statistics at the end. Not important for the processCPU function
-        if(finish_job->jobTime < FIN_TIME)
-        {
-            utiltimecpu += (finish_job->jobTime - e->jobTime);
-        }
-        if (((finish_job->jobTime - task->jobTime) > maxResponseCpu) && (finish_job->jobTime < FIN_TIME))
-        {
-            maxResponseCpu = (finish_job->jobTime - task->jobTime);
-        }
     }
        
 }
@@ -285,8 +271,7 @@ void processCpu(queue *pq, queue *cpuq, Job *e)
 //Function for DISK1 processing
 void processDisk1(queue *pq, queue *disk1queue, Job *e)
 {
-    // it processes the job it sees and adds it to the CPU queue, then after this if statement, 
-    // it should actually process the next job in the CPU queue
+    // it processes the job it sees and adds it to the disk1 queue
     if (e->jobType == DISK1_ARRIVAL)
     {
         Job* next_job = init_job(jobCount, DISK1_ARRIVAL, e->jobTime + randomNumber(ARRIVE_MIN, ARRIVE_MAX));
@@ -295,19 +280,13 @@ void processDisk1(queue *pq, queue *disk1queue, Job *e)
         fprintf(f, "At time %d job number %d arrives at DISK1\n", CURRENTTIME, jobCount - 1);
         add_queue(pq, next_job);
         add_queue(disk1queue, e);
-
-        // //keep track of max cpu size
-        // if (cpu.current > maxSizeCpu)
-        // {
-        //     maxSizeCpu = cpu.current;
-        // }
         
     }
     else
     {
-        //cpu.status = IDLE;
         fprintf(f, "At time %d job Number %d finished processing on DISK1 \n",CURRENTTIME, e->jobId);
-        //competedJobCpu++;
+
+        //check if the job will quit
         if(!quitProb(QUIT_PROB))
         {
             Job* disk_job = init_job(e->jobId, DISK1_FINISH, e->jobTime + randomNumber(CPU_MIN, CPU_MAX));
@@ -317,26 +296,20 @@ void processDisk1(queue *pq, queue *disk1queue, Job *e)
         }
     }
 
-    //if the cpu queue is not empty, process the next job in the cpu queue
+    //if the disk1 queue is not empty, process the next job in the disk1 queue
     if (disk1queue->size != 0)
     {
-        // dequeue the job from the cpu queue
+        // dequeue the job from the disk1 queue
         Job* task = del_queue(disk1queue);
+        
         // make a new job with a finish time
         Job* finish_job = init_job(task->jobId, DISK1_FINISH, e->jobTime + randomNumber(CPU_MIN, CPU_MAX));
+        
         // add to the priority queue with the jobs
         add_queue(pq, finish_job); 
+        
         //printf("Finish Job Number %d\n", finish_job->jobId);       
         
-        // this is for just the statistics at the end. Not important for the processCPU function
-        if(finish_job->jobTime < FIN_TIME)
-        {
-            utiltimecpu += (finish_job->jobTime - e->jobTime);
-        }
-        if (((finish_job->jobTime - task->jobTime) > maxResponseCpu) && (finish_job->jobTime < FIN_TIME))
-        {
-            maxResponseCpu = (finish_job->jobTime - task->jobTime);
-        }
     }
        
 }
@@ -344,8 +317,7 @@ void processDisk1(queue *pq, queue *disk1queue, Job *e)
 //Function for DISK2 processing
 void processDisk2(queue *pq, queue *disk2queue, Job *e)
 {
-    // it processes the job it sees and adds it to the CPU queue, then after this if statement, 
-    // it should actually process the next job in the CPU queue
+    // it processes the job it sees and adds it to the disk2 queue
     if (e->jobType == DISK2_ARRIVAL)
     {
         Job* next_job = init_job(jobCount, DISK2_ARRIVAL, e->jobTime + randomNumber(ARRIVE_MIN, ARRIVE_MAX));
@@ -354,19 +326,13 @@ void processDisk2(queue *pq, queue *disk2queue, Job *e)
         fprintf(f, "At time %d job number %d arrives at DISK2\n", CURRENTTIME, jobCount - 1);
         add_queue(pq, next_job);
         add_queue(disk2queue, e);
-
-        // //keep track of max cpu size
-        // if (cpu.current > maxSizeCpu)
-        // {
-        //     maxSizeCpu = cpu.current;
-        // }
         
     }
     else
     {
-        //cpu.status = IDLE;
         printf( "At time %d job number %d finished processing at DISK2\n",CURRENTTIME, e->jobId);
-        //competedJobCpu++;
+        
+        //check if the job will quit
         if(!quitProb(QUIT_PROB))
         {
             Job* disk_job = init_job(e->jobId, DISK2_FINISH, e->jobTime + randomNumber(CPU_MIN, CPU_MAX));
@@ -376,26 +342,19 @@ void processDisk2(queue *pq, queue *disk2queue, Job *e)
         }
     }
 
-    //if the cpu queue is not empty, process the next job in the cpu queue
+    //if the disk2 queue is not empty, process the next job in the disk2 queue
     if (disk2queue->size != 0)
     {
-        // dequeue the job from the cpu queue
+        // dequeue the job from the disk2 queue
         Job* task = del_queue(disk2queue);
+
         // make a new job with a finish time
         Job* finish_job = init_job(task->jobId, DISK2_FINISH, e->jobTime + randomNumber(CPU_MIN, CPU_MAX));
+        
         // add to the priority queue with the jobs
         add_queue(pq, finish_job); 
-        //printf("Finish Job Number %d\n", finish_job->jobId);       
         
-        // this is for just the statistics at the end. Not important for the processCPU function
-        if(finish_job->jobTime < FIN_TIME)
-        {
-            utiltimecpu += (finish_job->jobTime - e->jobTime);
-        }
-        if (((finish_job->jobTime - task->jobTime) > maxResponseCpu) && (finish_job->jobTime < FIN_TIME))
-        {
-            maxResponseCpu = (finish_job->jobTime - task->jobTime);
-        }
+        //printf("Finish Job Number %d\n", finish_job->jobId);       
     }
        
 }
